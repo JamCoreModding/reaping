@@ -8,7 +8,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeMap;
 
 public class ShrinkEffect extends MobEffect {
 	protected ShrinkEffect() {
-		super(MobEffectCategory.NEUTRAL, ChatFormatting.LIGHT_PURPLE.getColor());
+		super(MobEffectCategory.NEUTRAL, ChatFormatting.DARK_RED.getColor());
 	}
 
 	@Override

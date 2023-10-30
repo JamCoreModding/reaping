@@ -1,28 +1,28 @@
 {
   "schema_version": 1,
   "mixin": [
-    "{{mod_id}}.mixins.json",
-    "{{mod_id}}.fabriclike.mixins.json",
-    "{{mod_id}}.quilt.mixins.json"
+    "reaping.mixins.json",
+    "reaping.fabriclike.mixins.json",
+    "reaping.quilt.mixins.json"
   ],
   "quilt_loader": {
-    "group": "{{ group }}",
-    "id": "{{ mod_id }}",
+    "group": "io.github.jamalam360",
+    "id": "reaping",
     "version": "${version}",
     "metadata": {
-      "name": "{{ name }}",
-      "description": "{{ description }}",
+      "name": "Reaping",
+      "description": "Harvest your animals in the most cursed way possible",
       "contributors": {
-        "{{ author }}": "Owner"
+        "Jamalam": "Owner"
       },
       "contact": {
-        "sources": "https://github.com/{{github_owner}}/{{github_repo}}"
+        "sources": "https://github.com/JamCoreModding/reaping"
       },
-      "icon": "assets/{{ mod_id }}/icon.png"
+      "icon": "assets/reaping/icon.png"
     },
     "intermediate_mappings": "net.fabricmc:intermediary",
     "entrypoints": {
-      "init": ["{{group}}.{{mod_id}}.quilt.{{main_class}}Quilt"]
+      "init": ["io.github.jamalam360.reaping.quilt.ReapingQuilt"]
     },
     "depends": [
       {

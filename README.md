@@ -1,4 +1,4 @@
-# JamCore Multi-loader Template Mod
+# Reaping
 
 <p align="center">
     <img alt="forge" height="25" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/compact/supported/forge_vector.svg">
@@ -6,19 +6,14 @@
     <img alt="quilt" height="25" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/compact/supported/quilt_vector.svg">
 </p>
 
-This repository uses a system I created called
-[easytemplate](https://github.com/Jamalam360/easytemplate) to initialize the
-template automatically. After following the easytemplate prompt, you shouldn't
-have to make any changes before starting programming.
+## Harvest your animals in the most cursed way possible.
 
-1. Install [Deno](https://deno.land/)
-2. Click `Use This Template`
-3. Clone the repository.
-4. Run `deno run --allow-read --allow-write https://raw.githubusercontent.com/Jamalam360/easytemplate/main/easytemplate.ts` in
-   the repository directory.
-5. Follow the instructions.
+By using the Reaper you can harvest food from animals as if you had killed them, but without the guilt of killing them - the reaper tool simply cuts off most of the animal, making them a child again - **_science_**!
 
-## License
+- Obtain 4 types of reaper, the Iron Reaper, the Gold Reaper, the Diamond Reaper, and the Netherite Reaper. The sharpness and cooldown system means each has its own benefits and drawbacks!
+- Reap animals to turn them into babies and drop meat; reap babies to kill them and drop bones!
+- Reap players or villagers to obtain s̶u̴s̷p̵i̷c̷i̵o̴u̶s̶ ̸m̸e̷a̵t̸...
+- Put a reaper in a dispenser to automate your crimes!
+- Fight a new kind of pillager, who carries a reaper!
 
-This repository contains the MIT license for ease of use, but you can change it
-to whatever you want.
+<a href="https://bisecthosting.com/jamalam"><img src="https://www.bisecthosting.com/partners/custom-banners/982884df-e307-4b8d-b8c2-9f1868a1f13a.webp" height="120"></a>

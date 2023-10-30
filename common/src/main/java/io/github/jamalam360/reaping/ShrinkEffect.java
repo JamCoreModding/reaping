@@ -14,7 +14,7 @@ public class ShrinkEffect extends MobEffect {
 	@Override
 	public void onEffectStarted(LivingEntity target, int strength) {
 		super.onEffectStarted(target, strength);
-		ReapingPlatform.setScale(target, 0.3F);
+		ReapingPlatform.setScale(target, 0.4F);
 	}
 
 	public void onEffectFinished(LivingEntity target) {

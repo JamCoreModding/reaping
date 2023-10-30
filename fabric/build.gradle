@@ -65,7 +65,7 @@ if (System.getenv("CURSEFORGE_API_KEY") != null && System.getenv("MODRINTH_API_K
                     modrinth = "jamlib"
                 }
 
-                depends {
+                optional {
                     curseforge = "pehkui"
                     modrinth = "pehkui"
                 }
@@ -73,12 +73,12 @@ if (System.getenv("CURSEFORGE_API_KEY") != null && System.getenv("MODRINTH_API_K
 
             curseforge {
                 token = System.getenv("CURSEFORGE_API_KEY")
-                id = ""
+                id = "485532"
             }
 
             modrinth {
                 token = System.getenv("MODRINTH_API_KEY")
-                id = ""
+                id = "41SvwH0E"
             }
         }
     }

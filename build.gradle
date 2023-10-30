@@ -28,6 +28,10 @@ subprojects {
         silentMojangMappingsLicense()
     }
 
+    base {
+        archivesName = "reaping-${minecraft_version}"
+    }
+
     jar {
         manifest {
             attributes([

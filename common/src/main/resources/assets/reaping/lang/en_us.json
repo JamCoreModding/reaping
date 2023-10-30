@@ -1,0 +1,19 @@
+{
+  "config.reaping.allowReapingPlayers": "Allow Reaping Players",
+  "config.reaping.allowReapingPlayers.tooltip": "Whether to allow reaping players",
+  "config.reaping.discord": "Chat on Discord",
+  "config.reaping.github": "Report bugs and request new features on GitHub",
+  "config.reaping.modrinth": "Check for updates on Modrinth",
+  "item.reaping.iron_reaper": "Iron Reaper",
+  "item.reaping.gold_reaper": "Gold Reaper",
+  "item.reaping.diamond_reaper": "Diamond Reaper",
+  "item.reaping.netherite_reaper": "Netherite Reaper",
+  "item.reaping.humanoid_meat": "Suspicious Meat",
+  "enchantment.reaping.curse_of_bluntness": "Curse of Bluntness",
+  "enchantment.reaping.curse_of_bluntness.desc": "Increases the chance that animals will die when they are reaped.",
+  "advancements.reaping.humanoid_meat.title": "Not so tasty...",
+  "advancements.reaping.humanoid_meat.description": "You should have thought twice before eating that.",
+  "advancements.reaping.netherite_reaper.title": "Why would you do that?",
+  "advancements.reaping.netherite_reaper.description": "Seriously, sit down and ask yourself: 'Why did I do that?'",
+  "stat.reaping.use_reaper_tool": "Reaper Tool Uses"
+}

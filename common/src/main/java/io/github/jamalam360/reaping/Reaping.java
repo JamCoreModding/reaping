@@ -42,11 +42,10 @@ public class Reaping {
 		InteractionResult result = InteractionResult.PASS;
 
 		if (target.level().isClientSide) {
-			return InteractionResult.PASS;
+			return InteractionResult.SUCCESS;
 		}
 
 		if (!target.isDeadOrDying() && !target.isBlocking()) {
-			System.out.println(target);
 			if (target instanceof Animal animal) {
 				if (!target.isBaby()) {
 					dropEntityStacks(player, target, reaper);
@@ -69,8 +68,7 @@ public class Reaping {
 				}
 
 				result = InteractionResult.SUCCESS;
-			} else if (target instanceof AbstractVillager || (target instanceof Player && CONFIG.get().allowReapingPlayers)) {
-				System.out.println("eee");
+			} else if (!target.hasEffect(Content.SHRINK.get()) && (target instanceof AbstractVillager || (target instanceof Player && CONFIG.get().allowReapingPlayers))) {
 				target.spawnAtLocation(new ItemStack(Content.HUMANOID_MEAT.get(), lootingLvl == 0 ? 1 : target.level().random.nextInt(lootingLvl) + 1));
 				target.playSound(SoundEvents.CHICKEN_EGG, 1.0f, 1.0f);
 

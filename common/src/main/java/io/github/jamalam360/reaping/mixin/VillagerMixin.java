@@ -19,7 +19,6 @@ public abstract class VillagerMixin {
 	)
 	private void reaping$preventTrading(Player player, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir) {
 		if (player.getItemInHand(hand).getItem() instanceof ReaperItem) {
-			System.out.println("cancelling");
 			cir.setReturnValue(InteractionResult.PASS);
 		}
 	}

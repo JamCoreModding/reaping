@@ -1,16 +1,20 @@
 package io.github.jamalam360.reaping;
 
+import dev.architectury.registry.level.entity.EntityAttributeRegistry;
 import dev.architectury.registry.level.entity.trade.SimpleTrade;
 import dev.architectury.registry.level.entity.trade.TradeRegistry;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
 import io.github.jamalam360.reaping.item.CurseOfBluntness;
 import io.github.jamalam360.reaping.item.ReaperItem;
+import io.github.jamalam360.reaping.pillager.ReapingPillager;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.npc.VillagerProfession;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.*;
@@ -19,6 +23,7 @@ import net.minecraft.world.level.block.DispenserBlock;
 
 public class Content {
 	private static final DeferredRegister<Item> ITEMS = DeferredRegister.create(Reaping.MOD_ID, Registries.ITEM);
+	private static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(Reaping.MOD_ID, Registries.ENTITY_TYPE);
 	private static final DeferredRegister<MobEffect> EFFECTS = DeferredRegister.create(Reaping.MOD_ID, Registries.MOB_EFFECT);
 	private static final DeferredRegister<Enchantment> ENCHANTMENTS = DeferredRegister.create(Reaping.MOD_ID, Registries.ENCHANTMENT);
 	private static final DeferredRegister<ResourceLocation> STATS = DeferredRegister.create(Reaping.MOD_ID, Registries.CUSTOM_STAT);
@@ -40,15 +45,24 @@ public class Content {
 									.build()
 							)
 			));
+	public static final RegistrySupplier<EntityType<ReapingPillager>> PILLAGER = ENTITIES.register(Reaping.id("pillager"), () -> EntityType.Builder
+			.of(ReapingPillager::new, MobCategory.MONSTER)
+			.canSpawnFarFromPlayer()
+			.sized(0.6F, 1.95F)
+			.clientTrackingRange(8)
+			.build("reaping_pillager"));
 	public static final RegistrySupplier<ShrinkEffect> SHRINK = EFFECTS.register(Reaping.id("shrink"), ShrinkEffect::new);
 	public static final RegistrySupplier<CurseOfBluntness> CURSE_OF_BLUNTNESS = ENCHANTMENTS.register(Reaping.id("curse_of_bluntness"), CurseOfBluntness::new);
 	public static final ResourceLocation USE_REAPER_TOOL_STAT = Reaping.id("use_reaper_tool");
 
 	public static void registerAll() {
 		ITEMS.register();
+		ENTITIES.register();
 		EFFECTS.register();
 		ENCHANTMENTS.register();
 		STATS.register();
+
+		EntityAttributeRegistry.register(PILLAGER, ReapingPillager::createReapingPillagerAttributes);
 
 		DIAMOND_REAPER.listen((item) -> TradeRegistry.registerVillagerTrade(
 				VillagerProfession.BUTCHER,

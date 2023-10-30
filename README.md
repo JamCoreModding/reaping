@@ -8,6 +8,8 @@
 
 ## Harvest your animals in the most cursed way possible.
 
+<img src="https://github.com/JamCoreModding/reaping/blob/1.20.2-multiloader/demo.gif?raw=true" width="100%">
+
 By using the Reaper you can harvest food from animals as if you had killed them, but without the guilt of killing them - the reaper tool simply cuts off most of the animal, making them a child again - **_science_**!
 
 - Obtain 4 types of reaper, the Iron Reaper, the Gold Reaper, the Diamond Reaper, and the Netherite Reaper. The sharpness and cooldown system means each has its own benefits and drawbacks!

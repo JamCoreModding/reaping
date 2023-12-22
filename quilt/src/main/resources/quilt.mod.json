@@ -1,9 +1,7 @@
 {
   "schema_version": 1,
   "mixin": [
-    "reaping.mixins.json",
-    "reaping.fabriclike.mixins.json",
-    "reaping.quilt.mixins.json"
+    "reaping.mixins.json"
   ],
   "quilt_loader": {
     "group": "io.github.jamalam360",

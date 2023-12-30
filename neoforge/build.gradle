@@ -9,7 +9,7 @@ architectury {
 }
 
 base {
-    archivesName = "reaping-neoforge-${minecraft_version}"
+    archivesName = "reaping-neoforge"
 }
 
 configurations {
@@ -62,7 +62,7 @@ if (System.getenv("CURSEFORGE_API_KEY") != null && System.getenv("MODRINTH_API_K
                     modrinth = "jamlib"
                 }
 
-                optional {
+                depends {
                     curseforge = "pehkui"
                     modrinth = "pehkui"
                 }

@@ -1,31 +1,30 @@
 [versions]
 # https://modrinth.com/mod/architectury-api/versions
-architectury = "10.0.17"
+architectury = "11.0.9"
 
 # https://files.minecraftforge.net/net/minecraftforge/forge/
-forge = "1.20.2-48.0.33"
+forge = "1.20.4-49.0.12"
 
-# https://neoforged.net/
-neoforge = "20.2.86"
+# https://projects.neoforged.net/neoforged/neoforge
+neoforge = "20.4.69-beta"
 
 # https://fabricmc.net/develop
 fabric-loader = "0.15.3"
-fabric-api = "0.91.2+1.20.2"
+fabric-api = "0.92.0+1.20.4"
 
 # https://lambdaurora.dev/tools/import_quilt.html
 quilt-loader = "0.21.1"
 quilted-fabric-api = "7.4.0+0.90.0-1.20.1"
 
 # https://maven.jamalam.tech/#/releases
-jamlib = "1.0.3+1.20.2"
+jamlib = "1.0.3+1.20.4"
 
 # https://github.com/Virtuoel/Pehkui/tags
 pehkui-fabric-like = "3.7.12"
-pehkui-forge = "3.7.11-1.20.1-forge"
-pehkui-neoforge = "3.7.12-1.20.2-neoforge"
+pehkui-neoforge = "3.7.12-1.20.4-neoforge"
 
 # https://modrinth.com/mod/modmenu/versions
-modmenu = "8.0.0"
+modmenu = "9.0.0"
 
 [libraries]
 architectury-common = { module = "dev.architectury:architectury", version.ref = "architectury" }
@@ -50,7 +49,6 @@ jamlib-forge = { module = "io.github.jamalam360:jamlib-forge", version.ref = "ja
 jamlib-neoforge = { module = "io.github.jamalam360:jamlib-neoforge", version.ref = "jamlib" }
 
 pehkui-fabric-like = { module = "com.github.Virtuoel:Pehkui", version.ref = "pehkui-fabric-like" }
-pehkui-forge = { module = "com.github.Virtuoel:Pehkui", version.ref = "pehkui-forge" }
 pehkui-neoforge = { module = "com.github.Virtuoel:Pehkui", version.ref = "pehkui-neoforge" }
 
 modmenu = { module = "maven.modrinth:modmenu", version.ref = "modmenu" }

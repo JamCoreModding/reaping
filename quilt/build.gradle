@@ -9,7 +9,7 @@ architectury {
 }
 
 base {
-    archivesName = "reaping-quilt-${minecraft_version}"
+    archivesName = "reaping-quilt"
 }
 
 configurations {
@@ -69,7 +69,7 @@ if (System.getenv("CURSEFORGE_API_KEY") != null && System.getenv("MODRINTH_API_K
                     modrinth = "jamlib"
                 }
 
-                optional {
+                depends {
                     curseforge = "pehkui"
                     modrinth = "pehkui"
                 }

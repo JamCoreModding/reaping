@@ -1,9 +1,10 @@
 package io.github.jamalam360.reaping.forge;
 
 import net.minecraft.world.entity.LivingEntity;
+import virtuoel.pehkui.api.ScaleTypes;
 
 public class ReapingPlatformImpl {
 	public static void setScale(LivingEntity entity, float scale) {
-		// No-op, Pehkui no longer supports Forge
+		ScaleTypes.BASE.getScaleData(entity).setScale(scale);
 	}
 }

@@ -9,7 +9,7 @@ architectury {
 }
 
 base {
-    archivesName = "reaping-forge"
+    archivesName = "reaping-forge-${minecraft_version}"
 }
 
 loom {
@@ -31,6 +31,7 @@ dependencies {
     forge libs.forge
     modApi libs.architectury.forge
     modImplementation libs.jamlib.forge
+    modImplementation libs.pehkui.forge
 
     // Dependency of JamLib
     forgeRuntimeLibrary "blue.endless:jankson:1.2.3"
@@ -59,6 +60,11 @@ if (System.getenv("CURSEFORGE_API_KEY") != null && System.getenv("MODRINTH_API_K
                 depends {
                     curseforge = "jamlib"
                     modrinth = "jamlib"
+                }
+
+                optional {
+                    curseforge = "pehkui"
+                    modrinth = "pehkui"
                 }
             }
 

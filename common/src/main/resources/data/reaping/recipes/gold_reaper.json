@@ -14,7 +14,7 @@
     }
   },
   "result": {
-    "item": "reaping:gold_reaper",
+    "id": "reaping:gold_reaper",
     "count": 1
   }
 }

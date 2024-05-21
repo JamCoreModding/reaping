@@ -4,6 +4,7 @@ import io.github.jamalam360.jamlib.JamLib;
 import io.github.jamalam360.jamlib.JamLibPlatform;
 import io.github.jamalam360.jamlib.config.ConfigManager;
 import io.github.jamalam360.reaping.item.ReaperItem;
+import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -41,7 +42,7 @@ public class Reaping {
     }
 
     public static InteractionResult reap(@Nullable LivingEntity attacker, LivingEntity target, ItemStack reaper) {
-        int lootingLvl = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.MOB_LOOTING, reaper);
+        int lootingLvl = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.LOOTING, reaper);
         InteractionResult result = InteractionResult.PASS;
 
         if (target.level().isClientSide) {
@@ -75,7 +76,7 @@ public class Reaping {
                 }
 
                 result = InteractionResult.SUCCESS;
-            } else if (!target.hasEffect(Content.SHRINK.get()) && (target instanceof AbstractVillager || (target instanceof Player && CONFIG.get().allowReapingPlayers))) {
+            } else if (!target.hasEffect(Holder.direct(Content.SHRINK.get())) && (target instanceof AbstractVillager || (target instanceof Player && CONFIG.get().allowReapingPlayers))) {
                 target.spawnAtLocation(new ItemStack(Content.HUMANOID_MEAT.get(), lootingLvl == 0 ? 1 : target.level().random.nextInt(lootingLvl) + 1));
                 target.playSound(SoundEvents.CHICKEN_EGG, 1.0f, 1.0f);
 
@@ -90,7 +91,7 @@ public class Reaping {
                 }
 
                 // 30 Seconds
-                target.addEffect(new MobEffectInstance(Content.SHRINK.get(), 30 * 20));
+                target.addEffect(new MobEffectInstance(Holder.direct(Content.SHRINK.get()), 30 * 20));
             }
         }
 
@@ -129,7 +130,7 @@ public class Reaping {
 
     private static void dropEntityStacks(@Nullable LivingEntity attacker, LivingEntity target, ItemStack stack) {
         if (!target.level().isClientSide) {
-            LootTable table = target.level().getServer().getLootData().getLootTable(target.getLootTable());
+            LootTable table = target.level().getServer().reloadableRegistries().getLootTable(target.getLootTable());
             DamageSource source;
 
             if (attacker != null) {
@@ -148,7 +149,7 @@ public class Reaping {
                 builder = builder.withParameter(LootContextParams.LAST_DAMAGE_PLAYER, player).withLuck(player.getLuck());
             }
 
-            int lootingLvl = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.MOB_LOOTING, stack);
+            int lootingLvl = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.LOOTING, stack);
             int rollTimes = lootingLvl == 0 ? 1 : target.level().random.nextInt(lootingLvl) + 1;
 
             for (int i = 0; i < rollTimes; i++) {

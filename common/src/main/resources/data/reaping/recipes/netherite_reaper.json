@@ -4,12 +4,12 @@
     "item": "reaping:diamond_reaper"
   },
   "addition": {
-    "item": "minecraft:netherite_ingot"
+    "id": "minecraft:netherite_ingot"
   },
   "result": {
-    "item": "reaping:netherite_reaper"
+    "id": "reaping:netherite_reaper"
   },
   "template": {
-    "item": "minecraft:netherite_upgrade_smithing_template"
+    "id": "minecraft:netherite_upgrade_smithing_template"
   }
 }

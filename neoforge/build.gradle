@@ -1,5 +1,5 @@
 plugins {
-    id "com.github.johnrengelman.shadow" version "7.1.2"
+    id "com.github.johnrengelman.shadow" version "8.1.1"
     id "me.shedaniel.unified-publishing"
 }
 
@@ -31,7 +31,6 @@ dependencies {
     neoForge libs.neoforge
     modApi libs.architectury.neoforge
     modImplementation libs.jamlib.neoforge
-    modImplementation libs.pehkui.neoforge
 
     // Dependency of JamLib
     forgeRuntimeLibrary "blue.endless:jankson:1.2.3"
@@ -61,11 +60,6 @@ if (System.getenv("CURSEFORGE_API_KEY") != null && System.getenv("MODRINTH_API_K
                     curseforge = "jamlib"
                     modrinth = "jamlib"
                 }
-
-                depends {
-                    curseforge = "pehkui"
-                    modrinth = "pehkui"
-                }
             }
 
             curseforge {
@@ -79,6 +73,18 @@ if (System.getenv("CURSEFORGE_API_KEY") != null && System.getenv("MODRINTH_API_K
             }
         }
     }
+}
+
+processResources {
+    filesMatching("mods.toml") {
+        expand "minecraft_version": project.minecraft_version,
+                "architectury_version": libs.versions.architectury.get(),
+                "jamlib_version": libs.versions.jamlib.get()
+    }
+
+    inputs.property "minecraft_version", project.minecraft_version
+    inputs.property "architectury_version", libs.versions.architectury.get()
+    inputs.property "jamlib_version", libs.versions.jamlib.get()
 }
 
 shadowJar {

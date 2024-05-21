@@ -6,8 +6,11 @@ import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
 import io.github.jamalam360.reaping.item.CurseOfBluntness;
 import io.github.jamalam360.reaping.item.ReaperItem;
+import java.util.Optional;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -15,10 +18,10 @@ import net.minecraft.world.entity.npc.VillagerProfession;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Tiers;
 import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.trading.ItemCost;
 import net.minecraft.world.level.block.DispenserBlock;
 
 public class Content {
@@ -37,8 +40,9 @@ public class Content {
                 new Item.Properties()
                       .arch$tab(CreativeModeTabs.FOOD_AND_DRINKS)
                       .food(new FoodProperties.Builder()
-                            .meat().alwaysEat()
-                            .nutrition(7).saturationMod(1.4f)
+                            .alwaysEdible()
+                            .nutrition(7)
+                            .saturationModifier(1.4f)
                             .effect(new MobEffectInstance(MobEffects.HUNGER, 25 * 20), 1)
                             .effect(new MobEffectInstance(MobEffects.CONFUSION, 35 * 20), 1)
                             .effect(new MobEffectInstance(MobEffects.POISON, 10 * 20), 1)
@@ -48,6 +52,7 @@ public class Content {
     public static final RegistrySupplier<ShrinkEffect> SHRINK = EFFECTS.register(Reaping.id("shrink"), ShrinkEffect::new);
     public static final RegistrySupplier<CurseOfBluntness> CURSE_OF_BLUNTNESS = ENCHANTMENTS.register(Reaping.id("curse_of_bluntness"), CurseOfBluntness::new);
     public static final ResourceLocation USE_REAPER_TOOL_STAT = Reaping.id("use_reaper_tool");
+    public static final TagKey<Item> REAPERS_TAG = TagKey.create(BuiltInRegistries.ITEM.key(), Reaping.id("reapers"));
 
     public static void registerAll() {
         ITEMS.register();
@@ -59,8 +64,8 @@ public class Content {
               VillagerProfession.BUTCHER,
               5,
               new SimpleTrade(
-                    new ItemStack(Items.EMERALD, 13),
-                    ItemStack.EMPTY,
+                    new ItemCost(Items.EMERALD, 13),
+                    Optional.empty(),
                     item.getDefaultInstance(),
                     3,
                     30,
@@ -71,8 +76,8 @@ public class Content {
         HUMANOID_MEAT.listen((meat) -> TradeRegistry.registerTradeForWanderingTrader(
               true,
               new SimpleTrade(
-                    new ItemStack(Items.EMERALD, 7),
-                    ItemStack.EMPTY,
+                    new ItemCost(Items.EMERALD, 7),
+                    Optional.empty(),
                     meat.getDefaultInstance(),
                     6,
                     20,

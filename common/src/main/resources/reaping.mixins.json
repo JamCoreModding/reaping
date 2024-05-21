@@ -4,7 +4,6 @@
   "package": "io.github.jamalam360.reaping.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "LivingEntityMixin",
     "VillagerMixin",
     "WanderingTraderMixin"
   ],

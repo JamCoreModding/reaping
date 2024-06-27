@@ -4,6 +4,7 @@ import io.github.jamalam360.reaping.Content;
 import io.github.jamalam360.reaping.Reaping;
 import java.util.List;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.dispenser.BlockSource;
 import net.minecraft.core.dispenser.OptionalDispenseItemBehavior;
 import net.minecraft.server.level.ServerLevel;
@@ -13,7 +14,6 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.CreativeModeTabs;
@@ -22,19 +22,31 @@ import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.TieredItem;
 import net.minecraft.world.item.Tiers;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
+import net.minecraft.world.item.component.Tool;
 import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.world.phys.AABB;
 
 public class ReaperItem extends TieredItem {
 
-    private final ItemAttributeModifiers modifiers;
     private final float sharpnessModifier;
 
     public ReaperItem(Tier tier, Properties properties, float sharpnessModifier) {
-        super(tier, properties.stacksTo(1).arch$tab(CreativeModeTabs.TOOLS_AND_UTILITIES).durability(tier.getUses()));
+        super(tier, properties
+              .stacksTo(1)
+              .arch$tab(CreativeModeTabs.TOOLS_AND_UTILITIES)
+              .durability(tier.getUses())
+              .component(DataComponents.TOOL, createToolProperties())
+              .attributes(createAttributes(tier))
+        );
         this.sharpnessModifier = sharpnessModifier;
+    }
 
-        float attackDamage = switch ((Tiers) tier) {
+    private static Tool createToolProperties() {
+        return new Tool(List.of(), 1.0F, 2);
+    }
+
+    private static ItemAttributeModifiers createAttributes(Tier tier) {
+        float damage = switch ((Tiers) tier) {
             case IRON -> 3.4f;
             case GOLD -> 4.3f;
             case DIAMOND -> 5.2f;
@@ -42,15 +54,14 @@ public class ReaperItem extends TieredItem {
             default -> throw new IllegalArgumentException("Invalid Reaper tool material: " + tier);
         };
 
-        this.modifiers = ItemAttributeModifiers.builder()
-              .add(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "3cd506aa-2a1b-40be-b09f-7cee6b94af56", attackDamage, Operation.ADD_VALUE), EquipmentSlotGroup.HAND)
-              .add(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "05a49562-180e-4b2e-8290-7d6b5c363bfc", -2.8f, Operation.ADD_VALUE), EquipmentSlotGroup.HAND)
+        return ItemAttributeModifiers.builder()
+              .add(
+                    Attributes.ATTACK_DAMAGE,
+                    new AttributeModifier(BASE_ATTACK_DAMAGE_ID, damage, AttributeModifier.Operation.ADD_VALUE),
+                    EquipmentSlotGroup.MAINHAND
+              )
+              .add(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_ID, -2.8f, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
               .build();
-    }
-
-    @Override
-    public ItemAttributeModifiers getDefaultAttributeModifiers() {
-        return this.modifiers;
     }
 
     @Override
@@ -102,7 +113,7 @@ public class ReaperItem extends TieredItem {
             this.setSuccess(tryReapEntity(source.level(), blockPos, stack));
 
             if (this.isSuccess()) {
-                stack.hurtAndBreak(1, source.level().random, null, () -> stack.setCount(0));
+                stack.hurtAndBreak(1, source.level(), null, (item) -> {});
             }
 
             return stack;

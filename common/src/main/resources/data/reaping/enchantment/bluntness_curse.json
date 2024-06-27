@@ -1,0 +1,31 @@
+{
+  "anvil_cost": 8,
+  "description": {
+    "translate": "enchantment.reaping.bluntness_curse"
+  },
+  "effects": {
+    "minecraft:damage": [
+      {
+        "effect": {
+          "type": "minecraft:multiply",
+          "factor": 0.4
+        }
+      }
+    ]
+  },
+  "exclusive_set": "#minecraft:exclusive_set/damage",
+  "max_cost": {
+    "base": 50,
+    "per_level_above_first": 0
+  },
+  "max_level": 1,
+  "min_cost": {
+    "base": 25,
+    "per_level_above_first": 0
+  },
+  "slots": [
+    "mainhand"
+  ],
+  "supported_items": "#reaping:reapers",
+  "weight": 1
+}

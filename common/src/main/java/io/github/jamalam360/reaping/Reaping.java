@@ -5,6 +5,8 @@ import io.github.jamalam360.jamlib.JamLibPlatform;
 import io.github.jamalam360.jamlib.config.ConfigManager;
 import io.github.jamalam360.reaping.item.ReaperItem;
 import net.minecraft.core.Holder;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -18,8 +20,10 @@ import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
@@ -41,8 +45,9 @@ public class Reaping {
         Content.registerAll();
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public static InteractionResult reap(@Nullable LivingEntity attacker, LivingEntity target, ItemStack reaper) {
-        int lootingLvl = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.LOOTING, reaper);
+        int lootingLvl = getEnchantmentLevel(Enchantments.LOOTING, target.level(), reaper);
         InteractionResult result = InteractionResult.PASS;
 
         if (target.level().isClientSide) {
@@ -101,16 +106,10 @@ public class Reaping {
             if (reaper.getItem() instanceof ReaperItem reaperItem) {
                 chance *= reaperItem.getSharpnessModifier();
 
-                int bluntnessLevel = EnchantmentHelper.getItemEnchantmentLevel(Content.CURSE_OF_BLUNTNESS.get(), reaper);
+                int bluntnessLevel = getEnchantmentLevel(Content.BLUNTNESS_CURSE, target.level(), reaper);
 
                 if (bluntnessLevel > 0) {
                     chance += 0.4D;
-                }
-
-                int sharpnessLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SHARPNESS, reaper);
-
-                if (sharpnessLevel > 0) {
-                    chance -= 0.1D * sharpnessLevel;
                 }
 
                 chance = Math.max(0.0D, Math.min(1.0D, chance));
@@ -120,7 +119,7 @@ public class Reaping {
                 }
             }
 
-            if (attacker.level().random.nextDouble() <= chance) {
+            if (target.level().random.nextDouble() <= chance) {
                 target.kill();
             }
         }
@@ -143,22 +142,23 @@ public class Reaping {
                 source = target.damageSources().generic();
             }
 
-            LootParams.Builder builder = (new LootParams.Builder((ServerLevel) target.level())).withParameter(LootContextParams.THIS_ENTITY, target).withParameter(LootContextParams.ORIGIN, target.position()).withParameter(LootContextParams.DAMAGE_SOURCE, source).withOptionalParameter(LootContextParams.KILLER_ENTITY, source.getEntity()).withOptionalParameter(LootContextParams.DIRECT_KILLER_ENTITY, source.getDirectEntity());
+            LootParams.Builder builder = (new LootParams.Builder((ServerLevel) target.level())).withParameter(LootContextParams.THIS_ENTITY, target).withParameter(LootContextParams.ORIGIN, target.position()).withParameter(LootContextParams.DAMAGE_SOURCE, source).withOptionalParameter(LootContextParams.ATTACKING_ENTITY, source.getEntity()).withOptionalParameter(LootContextParams.DIRECT_ATTACKING_ENTITY, source.getDirectEntity());
 
             if (attacker instanceof Player player) {
                 builder = builder.withParameter(LootContextParams.LAST_DAMAGE_PLAYER, player).withLuck(player.getLuck());
             }
 
-            int lootingLvl = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.LOOTING, stack);
-            int rollTimes = lootingLvl == 0 ? 1 : target.level().random.nextInt(lootingLvl) + 1;
-
-            for (int i = 0; i < rollTimes; i++) {
-                table.getRandomItems(builder.create(LootContextParamSets.ENTITY), target.getLootTableSeed(), target::spawnAtLocation);
-            }
+            table.getRandomItems(builder.create(LootContextParamSets.ENTITY), target.getLootTableSeed(), target::spawnAtLocation);
         }
     }
 
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
+    private static int getEnchantmentLevel(ResourceKey<Enchantment> enchantment, Level level, ItemStack stack) {
+        Holder<Enchantment> holder = level.registryAccess().registryOrThrow(Registries.ENCHANTMENT).getHolder(enchantment).get();
+        return EnchantmentHelper.getItemEnchantmentLevel(holder, stack);
+    }
+
     public static ResourceLocation id(String path) {
-        return new ResourceLocation(MOD_ID, path);
+        return ResourceLocation.fromNamespaceAndPath(MOD_ID, path);
     }
 }

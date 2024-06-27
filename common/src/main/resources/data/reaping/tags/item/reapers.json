@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "reaping:iron_reaper",
+    "reaping:gold_reaper",
+    "reaping:diamond_reaper",
+    "reaping:netherite_reaper"
+  ]
+}

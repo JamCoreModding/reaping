@@ -4,11 +4,11 @@ import dev.architectury.registry.level.entity.trade.SimpleTrade;
 import dev.architectury.registry.level.entity.trade.TradeRegistry;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
-import io.github.jamalam360.reaping.item.CurseOfBluntness;
 import io.github.jamalam360.reaping.item.ReaperItem;
 import java.util.Optional;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.effect.MobEffect;
@@ -28,7 +28,6 @@ public class Content {
 
     private static final DeferredRegister<Item> ITEMS = DeferredRegister.create(Reaping.MOD_ID, Registries.ITEM);
     private static final DeferredRegister<MobEffect> EFFECTS = DeferredRegister.create(Reaping.MOD_ID, Registries.MOB_EFFECT);
-    private static final DeferredRegister<Enchantment> ENCHANTMENTS = DeferredRegister.create(Reaping.MOD_ID, Registries.ENCHANTMENT);
     private static final DeferredRegister<ResourceLocation> STATS = DeferredRegister.create(Reaping.MOD_ID, Registries.CUSTOM_STAT);
 
     public static final RegistrySupplier<ReaperItem> IRON_REAPER = ITEMS.register(Reaping.id("iron_reaper"), () -> createReaper(Tiers.IRON, 1.0F));
@@ -50,14 +49,13 @@ public class Content {
                       )
           ));
     public static final RegistrySupplier<ShrinkEffect> SHRINK = EFFECTS.register(Reaping.id("shrink"), ShrinkEffect::new);
-    public static final RegistrySupplier<CurseOfBluntness> CURSE_OF_BLUNTNESS = ENCHANTMENTS.register(Reaping.id("curse_of_bluntness"), CurseOfBluntness::new);
     public static final ResourceLocation USE_REAPER_TOOL_STAT = Reaping.id("use_reaper_tool");
     public static final TagKey<Item> REAPERS_TAG = TagKey.create(BuiltInRegistries.ITEM.key(), Reaping.id("reapers"));
+    public static final ResourceKey<Enchantment> BLUNTNESS_CURSE = ResourceKey.create(Registries.ENCHANTMENT, Reaping.id("bluntness_curse"));
 
     public static void registerAll() {
         ITEMS.register();
         EFFECTS.register();
-        ENCHANTMENTS.register();
         STATS.register();
 
         DIAMOND_REAPER.listen((item) -> TradeRegistry.registerVillagerTrade(

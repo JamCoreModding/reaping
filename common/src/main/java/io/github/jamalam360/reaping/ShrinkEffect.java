@@ -10,6 +10,6 @@ public class ShrinkEffect extends MobEffect {
 
     protected ShrinkEffect() {
         super(MobEffectCategory.NEUTRAL, ChatFormatting.DARK_RED.getColor());
-        this.addAttributeModifier(Attributes.SCALE, "4b234564-2452-4229-b3fd-b7c4d29277a9", -0.6F, Operation.ADD_MULTIPLIED_TOTAL);
+        this.addAttributeModifier(Attributes.SCALE, Reaping.id("effect.reaping.scale"), -0.6F, Operation.ADD_MULTIPLIED_TOTAL);
     }
 }

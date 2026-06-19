@@ -1,1 +1,1 @@
-26.1.x support
+26.2 support

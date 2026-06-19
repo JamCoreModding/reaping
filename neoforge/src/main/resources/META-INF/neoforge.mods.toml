@@ -8,7 +8,7 @@ modId = "reaping"
 version = "${file.jarVersion}"
 displayName = "Reaping"
 displayURL="https://github.com/JamCoreModding/reaping"
-logoFile = "icon.png"
+logoFile = "assets/reaping/icon.png"
 authors = "Jamalam"
 description = '''
 Harvest your animals in the most cursed way possible
@@ -17,7 +17,7 @@ Harvest your animals in the most cursed way possible
 [[dependencies.reaping]]
 modId = "neoforge"
 type = "required"
-versionRange = "[20.6,)"
+versionRange = "[26.1,)"
 ordering = "NONE"
 side = "BOTH"
 
@@ -26,13 +26,6 @@ modId = "minecraft"
 type = "required"
 versionRange = "[${minecraft_version},)"
 ordering = "NONE"
-side = "BOTH"
-
-[[dependencies.reaping]]
-modId = "architectury"
-type = "required"
-versionRange = "[${architectury_version},)"
-ordering = "AFTER"
 side = "BOTH"
 
 [[dependencies.reaping]]

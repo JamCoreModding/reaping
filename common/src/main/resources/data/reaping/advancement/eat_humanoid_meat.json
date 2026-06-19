@@ -1,10 +1,7 @@
 {
   "parent": "minecraft:husbandry/root",
   "display": {
-    "icon": {
-      "item": "reaping:humanoid_meat",
-      "nbt": "{Damage:0}"
-    },
+    "icon": "reaping:humanoid_meat",
     "title": {
       "translate": "advancements.reaping.humanoid_meat.title"
     },

@@ -1,8 +1,7 @@
-package io.github.jamalam360.reaping.item;
+package io.github.jamalam360.reaping.content.item;
 
-import io.github.jamalam360.reaping.Content;
-import io.github.jamalam360.reaping.Reaping;
-import java.util.List;
+import io.github.jamalam360.reaping.Reaper;
+import io.github.jamalam360.reaping.registry.ModStats;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.dispenser.BlockSource;
@@ -16,43 +15,49 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Tier;
-import net.minecraft.world.item.TieredItem;
-import net.minecraft.world.item.Tiers;
+import net.minecraft.world.item.ToolMaterial;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.component.Tool;
 import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.world.phys.AABB;
+import org.jspecify.annotations.NonNull;
 
-public class ReaperItem extends TieredItem {
+import java.util.List;
 
+public class ReaperItem extends Item {
+    private final ToolMaterial material;
     private final float sharpnessModifier;
 
-    public ReaperItem(Tier tier, Properties properties, float sharpnessModifier) {
-        super(tier, properties
+    public ReaperItem(ToolMaterial material, Properties properties, float sharpnessModifier) {
+        super(properties
               .stacksTo(1)
-              .arch$tab(CreativeModeTabs.TOOLS_AND_UTILITIES)
-              .durability(tier.getUses())
+                .durability(material.durability())
               .component(DataComponents.TOOL, createToolProperties())
-              .attributes(createAttributes(tier))
+                .attributes(createAttributes(material))
         );
+        this.material = material;
         this.sharpnessModifier = sharpnessModifier;
     }
 
     private static Tool createToolProperties() {
-        return new Tool(List.of(), 1.0F, 2);
+        return new Tool(List.of(), 1.0F, 2, false);
     }
 
-    private static ItemAttributeModifiers createAttributes(Tier tier) {
-        float damage = switch ((Tiers) tier) {
-            case IRON -> 3.4f;
-            case GOLD -> 4.3f;
-            case DIAMOND -> 5.2f;
-            case NETHERITE -> 6.8f;
-            default -> throw new IllegalArgumentException("Invalid Reaper tool material: " + tier);
-        };
+    private static ItemAttributeModifiers createAttributes(ToolMaterial material) {
+        float damage;
+        if (material == ToolMaterial.IRON) {
+            damage = 3.4f;
+        } else if (material == ToolMaterial.GOLD) {
+            damage = 4.3f;
+        } else if (material == ToolMaterial.DIAMOND) {
+            damage = 5.2f;
+        } else if (material == ToolMaterial.NETHERITE) {
+            damage = 6.8f;
+        } else {
+            throw new IllegalArgumentException("Invalid Reaper tool material: " + material);
+        }
 
         return ItemAttributeModifiers.builder()
               .add(
@@ -65,10 +70,10 @@ public class ReaperItem extends TieredItem {
     }
 
     @Override
-    public InteractionResult interactLivingEntity(ItemStack stack, Player player, LivingEntity entity, InteractionHand hand) {
-        if (Reaping.reap(player, entity, stack) == InteractionResult.SUCCESS) {
+    public @NonNull InteractionResult interactLivingEntity(@NonNull ItemStack stack, @NonNull Player player, @NonNull LivingEntity entity, @NonNull InteractionHand hand) {
+        if (Reaper.reapEntity(player, entity, stack) == InteractionResult.SUCCESS) {
             player.getItemInHand(hand).hurtAndBreak(1, player, hand == InteractionHand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);
-            player.awardStat(Content.USE_REAPER_TOOL_STAT, 1);
+            player.awardStat(ModStats.USE_REAPER_TOOL_STAT.get(), 1);
             return InteractionResult.SUCCESS;
         } else {
             return InteractionResult.PASS;
@@ -80,17 +85,20 @@ public class ReaperItem extends TieredItem {
     }
 
     public int getCooldownTicks() {
-        return switch ((Tiers) this.getTier()) {
-            case IRON -> 45;
-            case GOLD -> 18;
-            case DIAMOND -> 28;
-            case NETHERITE -> 23;
-            default -> throw new IllegalArgumentException("Invalid Reaper tool material: " + this.getTier());
-        };
+        if (material == ToolMaterial.IRON) {
+            return 45;
+        } else if (material == ToolMaterial.GOLD) {
+            return 18;
+        } else if (material == ToolMaterial.DIAMOND) {
+            return 28;
+        } else if (material == ToolMaterial.NETHERITE) {
+            return 23;
+        } else {
+            throw new IllegalArgumentException("Invalid Reaper tool material: " + material);
+        }
     }
 
     public static class DispenserBehavior extends OptionalDispenseItemBehavior {
-
         private static boolean tryReapEntity(ServerLevel level, BlockPos pos, ItemStack stack) {
             List<LivingEntity> entities = level.getEntitiesOfClass(LivingEntity.class, new AABB(pos), e -> {
                 if (e instanceof Player player) {
@@ -101,19 +109,19 @@ public class ReaperItem extends TieredItem {
             });
 
             for (LivingEntity livingEntity : entities) {
-                return Reaping.reap(null, livingEntity, stack) == InteractionResult.SUCCESS;
+                return Reaper.reapEntity(null, livingEntity, stack) == InteractionResult.SUCCESS;
             }
 
             return false;
         }
 
         @Override
-        protected ItemStack execute(BlockSource source, ItemStack stack) {
+        protected @NonNull ItemStack execute(BlockSource source, @NonNull ItemStack stack) {
             BlockPos blockPos = source.pos().relative(source.state().getValue(DispenserBlock.FACING));
             this.setSuccess(tryReapEntity(source.level(), blockPos, stack));
 
             if (this.isSuccess()) {
-                stack.hurtAndBreak(1, source.level(), null, (item) -> {});
+                stack.hurtAndBreak(1, source.level(), null, (ignored) -> {});
             }
 
             return stack;

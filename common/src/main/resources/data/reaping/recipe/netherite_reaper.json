@@ -1,15 +1,7 @@
 {
   "type": "minecraft:smithing_transform",
-  "base": {
-    "item": "reaping:diamond_reaper"
-  },
-  "addition": {
-    "id": "minecraft:netherite_ingot"
-  },
-  "result": {
-    "id": "reaping:netherite_reaper"
-  },
-  "template": {
-    "id": "minecraft:netherite_upgrade_smithing_template"
-  }
+  "base": "reaping:diamond_reaper",
+  "addition": "minecraft:netherite_ingot",
+  "result": "reaping:netherite_reaper",
+  "template": "minecraft:netherite_upgrade_smithing_template"
 }

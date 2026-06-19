@@ -1,10 +1,7 @@
 {
   "parent": "minecraft:nether/obtain_ancient_debris",
   "display": {
-    "icon": {
-      "item": "reaping:netherite_reaper",
-      "nbt": "{Damage:0}"
-    },
+    "icon": "reaping:netherite_reaper",
     "title": {
       "translate": "advancements.reaping.netherite_reaper.title"
     },

@@ -5,7 +5,7 @@ issueTrackerURL="https://github.com/JamCoreModding/reaping/issues"
 
 [[mods]]
 modId = "reaping"
-version = "${file.jarVersion}"
+version = "${version}"
 displayName = "Reaping"
 displayURL="https://github.com/JamCoreModding/reaping"
 logoFile = "assets/reaping/icon.png"
